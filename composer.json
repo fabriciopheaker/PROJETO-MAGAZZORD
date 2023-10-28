@@ -1,0 +1,14 @@
+{
+  "name": "projeto_magazzord",
+  "description": "Projeto de Etapa Tecnica da Magazzord",
+  "type": "projeto",
+  "authors": [
+    {
+      "name": "Fabricio Pheaker",
+      "email": "fabricio.demolay1574@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2"
+  }
+}

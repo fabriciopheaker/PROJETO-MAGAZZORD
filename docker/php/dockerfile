@@ -1,5 +1,6 @@
 FROM php:8-apache
-#atualizando os pacotes e instalando uzip e utilizatrios
+
+# Atualizando os pacotes e instalando uzip e utilizatrios
 RUN apt-get update && apt-get install -y --no-install-recommends \
   zip \
   bzip2 \
@@ -7,22 +8,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-utils \
   libzip-dev
 
-RUN docker-php-ext-install pdo_mysql mysqli zip
 # Instalando o Composer
 RUN php -r "copy('http://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
-# RUN mv composer.phar /var/www/html
 
-#PERMISSÕES DOS ARQUIVOS DO CD FONTE FUNCIONEM NO WINDOWS
+# Instalando as extensões PHP necessárias
+RUN docker-php-ext-install pdo_mysql mysqli zip
+
+# PERMISSÕES DOS ARQUIVOS DO CD FONTE FUNCIONEM NO WINDOWS
 
 RUN chown -R root:www-data /var/www/html
 RUN chmod -R u+rwx,g+rx,o+rw /var/www/html
 RUN find /var/www/html -type d -exec chmod u+rwx,g+rx,o+rx {} +
 RUN find /var/www/html -type f -exec chmod u+rw,g+rw,o+r {} +
 
-
-
+# Exposndo as portas
 EXPOSE 80
 EXPOSE 443
-EXPOSE 3306

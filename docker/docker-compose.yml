@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   app:
     build: ./php
@@ -11,8 +13,14 @@ services:
     networks:
       - magazord-rede
     restart: always
+
     environment:
-      APACHE_LOG_DIR: /logs/apache
+      - APACHE_DOCUMENTROOT=/var/www/html
+      - APACHE_MOD_REWRITE=On
+      - PHP_ERROR_LOG=/var/www/html/logs/error.log
+      - PHP_LOG_DIR=/var/www/html/logs
+      - PHP_LOG_LEVEL=debug
+      
     depends_on:
       - mysql
     links:

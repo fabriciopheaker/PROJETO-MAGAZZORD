@@ -3,16 +3,16 @@
 namespace App\Controller;
 
 use App\Core\ViewEngine;
-use App\Core\DoctrineConf;
-use App\Model\User;
+use App\Repository\UserRepository;
+
 
 class HomeController
 {
-  private $doctrine;
+  private $repository;
 
   public function __construct()
   {
-    /* $this->doctrine = new DoctrineConfig(); */
+    $this->repository = new UserRepository();
   }
 
 
@@ -20,11 +20,8 @@ class HomeController
 
   public function index()
   {
-    $doctrineConf = DoctrineConf::getInstance();
-    $entityManager = $doctrineConf->getEntityManager();
-    $userRepository = $entityManager->getRepository(User::class);
-    $users = $userRepository->findAll();
-    var_dump($users);
+    $dados = $this->repository->findAllRepository();
+    return ViewEngine::render('HomeView', 'User', json_encode($dados));
   }
 
 

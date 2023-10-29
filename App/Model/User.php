@@ -3,6 +3,7 @@
 namespace App\Model;
 
 /**
+ * @ORM\Entity
  * User
  */
 class User

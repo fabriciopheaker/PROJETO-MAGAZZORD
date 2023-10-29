@@ -9,6 +9,10 @@
 
 <body>
   <h1>Hello, world!</h1>
+
+  <script>
+    console.log(user)
+  </script>
 </body>
 
 </html>

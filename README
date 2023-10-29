@@ -2,13 +2,13 @@
 
 caso a instalação do composer não tenha sido feita na hora de criar o container, basta executar o comando:
 
-docker-compose exec app bash 
+cd docker
+docker-compose exec app bash
+composer install
 
-esse comando vai executar o shell dentro do container/serviço App, ai abrir o shell copiar e colocar esses comandos:  
+# PARA HABILITAR O .HTACCESS E ROTEAMENTO. :
 
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-php -r "unlink('composer-setup.php');"
-
-depois de instalar verifique se a instalação foi bem sucedida e a version do composer com 
-composer --version
+cd docker
+docker-compose exec app bash
+a2enmod rewrite
+service apache2 restart

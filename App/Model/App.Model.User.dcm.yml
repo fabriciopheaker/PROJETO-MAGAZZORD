@@ -1,0 +1,13 @@
+App\Model\User:
+  type: entity
+  table: user
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    name:
+      type: string
+      length: 255
+  lifecycleCallbacks: { prePersist: [prePersistUser] }

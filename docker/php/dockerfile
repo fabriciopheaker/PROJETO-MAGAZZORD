@@ -1,28 +1,24 @@
-FROM php:8-apache
+FROM php:7.4-apache
 
-# Atualizando os pacotes e instalando uzip e utilizatrios
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Atualizando os pacotes e instalando utilitários
+RUN apt-get update && apt-get install -y curl \
   zip \
-  bzip2 \
   unzip \
   apt-utils \
   libzip-dev
 
-# Instalando o Composer
-RUN php -r "copy('http://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
+# Baixando e instalando o Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.2.0
 
 # Instalando as extensões PHP necessárias
 RUN docker-php-ext-install pdo_mysql mysqli zip
 
 # PERMISSÕES DOS ARQUIVOS DO CD FONTE FUNCIONEM NO WINDOWS
-
 RUN chown -R root:www-data /var/www/html
 RUN chmod -R u+rwx,g+rx,o+rw /var/www/html
 RUN find /var/www/html -type d -exec chmod u+rwx,g+rx,o+rx {} +
 RUN find /var/www/html -type f -exec chmod u+rw,g+rw,o+r {} +
 
-# Exposndo as portas
-EXPOSE 80
-EXPOSE 443
+# Expondo as portas
+
+

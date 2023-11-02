@@ -1,7 +1,13 @@
 $(document).ready(function () {
   $('#buscarPessoa').click(() => {
     $('#loader').prop("hidden", false);
-    pesquisarPessoa()
+    let nome = $('#NOME').val().trim();
+    if (nome) {
+      findPessoa(nome)
+    } else {
+      indexPessoas()
+    }
+
   })
 
 
@@ -12,13 +18,25 @@ $(document).ready(function () {
 
 });
 
-async function pesquisarPessoa() {
+async function indexPessoas() {
   let json = await getDados('buscarpessoas');
   if (json) {
     $('#loader').prop("hidden", true);
     injetarDados(json)
   }
 }
+
+async function findPessoa(nome) {
+
+  let json = await getDados('buscarpessoa/' + nome);
+  console.log(json)
+  if (json) {
+    $('#loader').prop("hidden", true);
+    injetarDados(json)
+  }
+}
+
+
 
 async function gravarPessoa() {
 

@@ -13,7 +13,7 @@ async function getDados(uri, parametros = {}) {
 
     return response.data;
   } catch (error) {
-    console.error(error.response.data);
+    console.error(error.response);
     throw error; // Rejeitar a promessa para que os chamadores possam lidar com o erro, se necessário
   }
 }

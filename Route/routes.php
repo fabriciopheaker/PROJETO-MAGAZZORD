@@ -11,4 +11,5 @@ use App\Controller\PessoaController;
 Router::get('/', [HomeController::class, 'index']);
 
 Router::get('/buscarpessoas', [PessoaController::class, 'index']);
+Router::get('/buscarpessoa/{NOME}', [PessoaController::class, 'find']);
 Router::post('/gravarpessoa', [PessoaController::class, 'create']);

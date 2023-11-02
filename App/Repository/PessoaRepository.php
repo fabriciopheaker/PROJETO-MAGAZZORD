@@ -28,43 +28,16 @@ class PessoaRepository
     return $pessoasArray;
   }
 
-
-
-
-
-  /* 
-
-
-  public function findAll()
+  public function findOne($params)
   {
     $doctrineConf = DoctrineConf::getInstance();
     $entityManager = $doctrineConf->getEntityManager();
     $pessoaEntity = $entityManager->getRepository(Pessoa::class);
-    $pessoas =  $pessoaEntity->findAll();
-    /* OBS A CONSULTA ESTÁ ME RETORNANDO DADOS PRIVADOS Q ESTAVA IMPEDINDO DE TRANSFORMAR EM JSON PARA CRIAR O OBJETO JS NO ViewEngine, para contornar isso utilizei o array map para criar um novo array  
-    $pessoasArray = array_map(function ($pessoas) {
-      return [
-        'ID' => $pessoas->getId(),
-        'NOME' => $pessoas->getNome(),
-        'CPF' => $pessoas->getCpf(),
-        // Adicione outros atributos públicos que deseja copiar
-      ];
-    }, $pessoas);
-
-    return $pessoasArray;
+    $pessoas =  $pessoaEntity->findA();
   }
-*/
 
 
 
-
-
-
-
-
-  public function destroy($id)
-  {
-  }
   public function create($json)
   {
     try {
@@ -79,5 +52,14 @@ class PessoaRepository
     } catch (Exception $e) {
       return false;
     }
+  }
+
+
+
+
+
+
+  public function destroy($id)
+  {
   }
 }

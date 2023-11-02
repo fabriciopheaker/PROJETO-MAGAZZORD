@@ -72,7 +72,7 @@
           </div>
           <div class="card-body mx-5">
             <label class="form-label">Nome</label>
-            <input type="text" class="form-control">
+            <input id="NOME" type="text" class="form-control">
           </div>
           <div class="card-footer">
             <div class="d-flex justify-content-end">
@@ -132,11 +132,11 @@
           <form>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">NOME</span>
-              <input id="NOME" type="text" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="NOME_CADASTRO" type="text" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">CPF</span>
-              <input id="CPF" type="text" class="form-control" placeholder="CPF" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="CPF_CADASTRO" type="text" class="form-control" placeholder="CPF" aria-label="Username" aria-describedby="basic-addon1">
             </div>
           </form>
 

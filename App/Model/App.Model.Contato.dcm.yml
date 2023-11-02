@@ -1,0 +1,20 @@
+App\Model\Contato:
+  type: entity
+  table: contato
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    tipo:
+      type: boolean
+    descricao:
+      type: string
+  manyToOne:
+    pessoa:
+      targetEntity: App\Model\Pessoa
+      inversedBy: contatos
+      joinColumn:
+        name: id_pessoa
+        referencedColumnName: id

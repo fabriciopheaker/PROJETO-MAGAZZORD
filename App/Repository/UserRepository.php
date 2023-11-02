@@ -14,11 +14,17 @@ class UserRepository
     $doctrineConf = DoctrineConf::getInstance();
     $entityManager = $doctrineConf->getEntityManager();
     $userRepository = $entityManager->getRepository(User::class);
-    $users = $userRepository->findAll();
-    /*     echo "<pre>";
-    var_dump($users);
-    /*      */
-    return $users;
+    $users =  $userRepository->findAll();
+    /* OBS A CONSULTA ESTÁ ME RETORNANDO DADOS PRIVADOS Q ESTAVA IMPEDINDO DE TRANSFORMAR EM JSON PARA CRIAR O OBJETO JS NO ViewEngine, para contornar isso utilizei o array map para criar um novo array  */
+    $usersArray = array_map(function ($user) {
+      return [
+        'ID' => $user->getId(),
+        'NOME' => $user->getName(),
+        // Adicione outros atributos públicos que deseja copiar
+      ];
+    }, $users);
+
+    return $usersArray;
   }
 
   public function destroy($id)

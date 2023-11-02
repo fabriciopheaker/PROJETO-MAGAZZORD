@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Core\ViewEngine;
-use App\Repository\UserRepository;
+
 
 
 class HomeController
@@ -12,7 +12,6 @@ class HomeController
 
   public function __construct()
   {
-    $this->repository = new UserRepository();
   }
 
 
@@ -20,8 +19,7 @@ class HomeController
 
   public function index()
   {
-    $dados = $this->repository->findAllRepository();
-    return ViewEngine::render('HomeView', 'User', json_encode($dados));
+    return ViewEngine::render('HomeView');
   }
 
 

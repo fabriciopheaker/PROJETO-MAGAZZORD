@@ -1,0 +1,25 @@
+.iconeOperat
+{
+  font-size: 20px !important;
+}
+
+
+
+.botaoModal
+{
+  background-color: rgb(108, 117, 125, 0.5) !important; 
+  color: rgba(0, 0, 0, 0.151) !important;
+  height: 85px;
+  width: 85px;
+}
+
+.botaoModal:hover
+{
+  background-color: #727cf5 !important;
+  color: rgb(255, 255, 255) !important;
+}
+
+#icone
+{
+  font-size: 50px !important;
+}

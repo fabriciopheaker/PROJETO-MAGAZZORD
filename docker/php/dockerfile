@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y curl \
   unzip \
   apt-utils \
   libzip-dev
+RUN echo "error_log = ../../logs/error.log" >> /usr/local/etc/php/php.ini
 
 # Baixando e instalando o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.2.0

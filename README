@@ -7,8 +7,24 @@ docker-compose exec app bash
 composer install
 
 # PARA HABILITAR O .HTACCESS E ROTEAMENTO. :
-
 cd docker
 docker-compose exec app bash
 a2enmod rewrite
 service apache2 restart
+
+# INSTALAR AS DEPENDENCIAS
+npm install 
+
+
+
+# COMANDOS DOCTRINE 
+
+# CRIAR MODEL ENTITY
+vendor/bin/doctrine orm:generate-entities ./
+
+# CRIAR TABLES
+vendor/bin/doctrine orm:schema-tool:create 
+# ATUALIZAR TABLE
+vendor/bin/doctrine orm:schema-tool:update --force
+
+

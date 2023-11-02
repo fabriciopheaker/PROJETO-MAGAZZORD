@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Core\Response;
+
 class Router
 {
   private static $routes = [];
@@ -48,14 +50,16 @@ class Router
         $action = $route['action'];
         $controllerClass = $action[0];
         $method = $action[1];
-        error_log('cheuguei');
-        // Verifica se a classe do controlador foi carregada corretamente pelo autoloader
+
+        $HandlePostData = Response::HandlePost();
+
+        //VERIFICA SE A CLASSE DO CONTROLLER FOI CARREGADA CORRETAMENTE PELO AUTOLOADER
         if (class_exists($controllerClass)) {
-          // Crie a instância do controlador
+          // INSTANCIA O CONTROLLER  
           $controllerInstance = new $controllerClass();
-          error_log(print_r($controllerInstance, true));
-          // Chame a ação do controlador com os parâmetros capturados
-          call_user_func_array([$controllerInstance, $method], $matches);
+
+          //CHAMA O CONTROLLER E PASSA OS ARGUMENTOS 
+          call_user_func_array([$controllerInstance, $method],  [$HandlePostData]);
         } else {
           // Caso a classe não tenha sido encontrada, exiba uma página de erro 404
           header("HTTP/1.0 404 Not Found");

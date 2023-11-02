@@ -19,14 +19,7 @@ class DoctrineConf
 
   private function __construct()
   {
-    $conn = [
-      'dbname'   => self::DB_NAME,
-      'user'     => self::USER,
-      'password' => self::PASSWORD,
-      'host'     => self::HOST,
-      'driver'   => self::DRIVER,
-      'path' => self::PATH,
-    ];
+    $conn = self::getConfig();
 
     $config = Setup::createYAMLMetadataConfiguration([__DIR__ . '/../Model/'], true);
     $this->entityManager = EntityManager::create($conn, $config);

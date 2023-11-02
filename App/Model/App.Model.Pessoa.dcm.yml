@@ -1,0 +1,14 @@
+# Entidade Pessoa
+App\Model\Pessoa:
+  type: entity
+  table: Pessoa
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    nome:
+      type: string
+    cpf:
+      type: string

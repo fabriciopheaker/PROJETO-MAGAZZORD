@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\PessoaRepository;
 use App\Core\Response;
+use App\Core\Validator;
 
 
 class PessoaController
@@ -21,39 +22,56 @@ class PessoaController
   public function index()
   {
     $dados = $this->repository->findAll();
-    $resposta = "Erro ao buscar dados";
-    if ($dados) {
-      $resposta = Response::json($dados);
-    }
+    $dados ? $resposta = Response::json($dados) : $resposta = Response::Error();
     return $resposta;
   }
 
 
   public function find($params)
   {
-    var_dump($params);
-    /*     $dados = $this->repository->findOne($params);
-    $resposta = "Erro ao buscar dados";
-    if ($dados) {
-      $resposta = Response::json($dados);
-    }
-    return $resposta; */
+
+    $dados = $this->repository->find($params);
+    $dados ? $resposta = Response::json($dados) : $resposta = Response::Error();
+    return $resposta;
   }
 
 
-  public function create($params)
+  public function create($json)
   {
-    $dados = $this->repository->create($params);
-    $resposta = false;
-    if ($dados) {
-      $resposta = Response::json("SUCCESS");
+    $result = Validator::Validator($json, ['NOME', 'CPF']);
+    if ($result) {
+      $json->NOME =  strtoupper($json->NOME);
+      $dados = $this->repository->create($json);
+      $dados ? $resposta = Response::json($dados) : null;
+    } else {
+      $resposta = Response::Error();
     }
     return $resposta;
   }
-  public function update($id)
+
+  public function destroy($json)
   {
+    $result = Validator::Validator($json, ['ID']);
+    if ($result) {
+      $dados = $this->repository->destroy($json);
+      $dados ? $resposta = Response::json($dados) : null;
+    } else {
+      $resposta = Response::Error();
+    }
+    return $resposta;
   }
-  public function destroy()
+
+
+
+  public function update($json)
   {
+    $result = Validator::Validator($json, ['ID', 'NOME', 'CPF']);
+    if ($result) {
+      $dados = $this->repository->update($json);
+      $dados ? $resposta = Response::json($dados) : null;
+    } else {
+      $resposta = Response::Error();
+    }
+    return $resposta;
   }
 }

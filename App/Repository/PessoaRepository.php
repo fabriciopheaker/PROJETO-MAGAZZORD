@@ -28,12 +28,27 @@ class PessoaRepository
     return $pessoasArray;
   }
 
-  public function findOne($params)
+  public function find($params)
   {
     $doctrineConf = DoctrineConf::getInstance();
     $entityManager = $doctrineConf->getEntityManager();
     $pessoaEntity = $entityManager->getRepository(Pessoa::class);
-    $pessoas =  $pessoaEntity->findA();
+
+    $query = $pessoaEntity->createQueryBuilder('p')
+      ->where('p.nome LIKE :nome')
+      ->setParameter('nome', '%' . $params->NOME . '%')
+      ->getQuery();
+    $pessoas = $query->getResult();
+    $pessoasArray = array_map(function ($pessoas) {
+      return [
+        'ID' => $pessoas->getId(),
+        'NOME' => $pessoas->getNome(),
+        'CPF' => $pessoas->getCpf(),
+        // Adicione outros atributos públicos que deseja copiar
+      ];
+    }, $pessoas);
+
+    return $pessoasArray;
   }
 
 
@@ -55,11 +70,39 @@ class PessoaRepository
   }
 
 
-
-
-
-
-  public function destroy($id)
+  public function destroy($json)
   {
+    try {
+      $doctrineConf = DoctrineConf::getInstance();
+      $entityManager = $doctrineConf->getEntityManager();
+      $pessoaEntity = $entityManager->getRepository(Pessoa::class);
+      $pessoa =  $pessoaEntity->findOneBy(['id' => $json->ID]);
+      if ($pessoa) {
+        $entityManager->remove($pessoa);
+        $entityManager->flush();
+        return true;
+      }
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+
+  public function update($json)
+  {
+    try {
+      $doctrineConf = DoctrineConf::getInstance();
+      $entityManager = $doctrineConf->getEntityManager();
+      $pessoaEntity = $entityManager->getRepository(Pessoa::class);
+      $pessoa =  $pessoaEntity->findOneBy(['id' => $json->ID]);
+      if ($pessoa) {
+        $pessoa->setNome($json->NOME);
+        $pessoa->setCpf($json->CPF);
+        $entityManager->flush();
+        return true;
+      }
+    } catch (Exception $e) {
+      return false;
+    }
   }
 }

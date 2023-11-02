@@ -12,4 +12,7 @@ Router::get('/', [HomeController::class, 'index']);
 
 Router::get('/buscarpessoas', [PessoaController::class, 'index']);
 Router::get('/buscarpessoa/{NOME}', [PessoaController::class, 'find']);
+
 Router::post('/gravarpessoa', [PessoaController::class, 'create']);
+Router::post('/deletarpessoa', [PessoaController::class, 'destroy']);
+Router::post('/editarpessoa', [PessoaController::class, 'update']);

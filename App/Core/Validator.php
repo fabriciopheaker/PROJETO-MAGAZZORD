@@ -1,13 +1,6 @@
 <?php
 
 
-/* 
-*   By: Fabricio Pheaker
-*   
-*
-*/
-
-
 /*  
 *   Validador Multiparams, recebe 2 parametros obrigatórios, o primeiro é o objeto e o segundo é as propriedades do $obj que deseja verificar.
 *   Verificação: Passa um array com todos as propriedades, verifica se cada propriedade existe,se é diferente de null e se não é vazia.
@@ -22,22 +15,27 @@
 *     if( validator($json, ['DATA_INICIO', 'DATA_FIM'], true) )
 */
 
+namespace App\Core;
 
-/* VALIDADOR ADAPTADO PARA DATAS */
-function Validator($obj, array $param, $data = false)
+class Validator
 {
-    $respostas = [];
-    if ($data === true) {
-        isset($obj->{$param[0]}) && !empty($obj->{$param[0]}) && isset($obj->{$param[1]}) && !empty($obj->{$param[1]}) ? $respostas = true : $respostas = false;
-        return $respostas;
-    }
-    foreach ($param as $values) {
-        isset($obj->{$values}) && !empty($obj->{$values}) ? $respostas[] = true : $respostas[] = false;
-    }
-    foreach ($respostas as $resposta) {
-        if ($resposta === false && $resposta !== 0) {
-            return $respostas = false;
+
+    /* VALIDADOR ADAPTADO PARA DATAS */
+    public static function Validator($obj, array $param, $data = false)
+    {
+        $respostas = [];
+        if ($data === true) {
+            isset($obj->{$param[0]}) && !empty($obj->{$param[0]}) && isset($obj->{$param[1]}) && !empty($obj->{$param[1]}) ? $respostas = true : $respostas = false;
+            return $respostas;
         }
-    };
-    return $respostas = true;
+        foreach ($param as $values) {
+            isset($obj->{$values}) && !empty($obj->{$values}) ? $respostas[] = true : $respostas[] = false;
+        }
+        foreach ($respostas as $resposta) {
+            if ($resposta === false && $resposta !== 0) {
+                return $respostas = false;
+            }
+        };
+        return $respostas = true;
+    }
 }

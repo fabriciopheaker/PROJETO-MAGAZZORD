@@ -129,14 +129,15 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form id="formGravacao">
+            <input id="ID_EDIT" type="text" hidden>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">NOME</span>
-              <input id="NOME_CADASTRO" type="text" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="NOME_CADASTRO" type="text" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1" required>
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">CPF</span>
-              <input id="CPF_CADASTRO" type="text" class="form-control" placeholder="CPF" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="CPF_CADASTRO" type="text" class="form-control" placeholder="CPF" aria-label="Username" aria-describedby="basic-addon1" require>
             </div>
           </form>
 
@@ -178,7 +179,7 @@
   <script src="../../node_modules/axios/dist/axios.min.js"> </script>
   <script src="../../Resources/js/custom.js"></script>
 
-
+  <script src="../../node_modules/sweetalert/dist/sweetalert.min.js"> </script>
 
 
 

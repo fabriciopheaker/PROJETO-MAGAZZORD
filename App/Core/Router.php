@@ -31,7 +31,6 @@ class Router
 
   public static function captureRoute()
   {
-
     global $routes;
 
     $requestUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -51,21 +50,38 @@ class Router
         $controllerClass = $action[0];
         $method = $action[1];
 
-        $HandlePostData = Response::HandlePost();
+        if ($requestMethod === 'GET') {
 
-        //VERIFICA SE A CLASSE DO CONTROLLER FOI CARREGADA CORRETAMENTE PELO AUTOLOADER
-        if (class_exists($controllerClass)) {
-          // INSTANCIA O CONTROLLER  
-          $controllerInstance = new $controllerClass();
+          $params = new \stdClass();
+          foreach ($matches as $key => $value) {
+            $params->$key = $value;
+          }
 
-          //CHAMA O CONTROLLER E PASSA OS ARGUMENTOS 
-          call_user_func_array([$controllerInstance, $method],  [$HandlePostData]);
-        } else {
-          // Caso a classe não tenha sido encontrada, exiba uma página de erro 404
-          header("HTTP/1.0 404 Not Found");
-          echo 'Erro 404 - Página não encontrada';
+          if (class_exists($controllerClass)) {
+            $controllerInstance = new $controllerClass();
+            call_user_func_array([$controllerInstance, $method], [$params]);
+            return;
+          }
+        } elseif ($requestMethod === 'POST') {
+
+          $HandlePostData = Response::HandlePost();
+
+          if ($HandlePostData !== null) {
+            // INSTANCIA O CONTROLLER
+            if (class_exists($controllerClass)) {
+              $controllerInstance = new $controllerClass();
+
+              // CHAMA O CONTROLLER E PASSA OS ARGUMENTOS
+              call_user_func_array([$controllerInstance, $method], [$HandlePostData]);
+            }
+            return;
+          } else {
+            // Caso a solicitação POST não seja válida, exiba um erro
+            header("HTTP/1.0 400 Bad Request");
+            echo 'Erro 400 - Solicitação inválida';
+            return;
+          }
         }
-        return;
       }
     }
 
@@ -73,6 +89,7 @@ class Router
     header("HTTP/1.0 404 Not Found");
     echo 'Erro 404 - Página não encontrada';
   }
+
 
   public static function redirect($url, $redirectUrl)
   {
@@ -84,6 +101,9 @@ class Router
 
   private static function buildPattern($url)
   {
+    // Substitua os segmentos de parâmetros por grupos de captura regex
+    $url = preg_replace('/\{(\w+)\}/', '(?P<$1>[^/]+)', $url);
+
     $pattern = '/^';
     $pattern .= str_replace('/', '\/', $url);
     $pattern .= '\/?'; // Adicionamos '\/?' para corresponder com ou sem a barra final

@@ -20,7 +20,8 @@ O nome do objeto Js é passado pelo controlador para a ViewEngine.
 App/Core/ViewEngine - function render,
 
 OBS: Devido a Complexidade de algumas tarefas o projeto foi finalizado faltando pequenas melhorias e funcionalidades.
-Para fazer as buscar, basta clicar no button buscar, se o input estiver vazio será uma busca geral no BD, se tiver valor no input ele irá buscar os registros que contenham aquele valor. 
+Para fazer as buscar, basta clicar no button buscar, se o input estiver vazio será uma busca geral no BD, se tiver valor no input ele irá buscar os registros que contenham aquele valor.
+Para fazer o Crud de Contatos, precisar pesquisar uma pessoa primeiro, clicar no button de visualizar pessoa, vai abrir uma nova pagina e ali é possível fazer toda as operações de crud
 
 
 

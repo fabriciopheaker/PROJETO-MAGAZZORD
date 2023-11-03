@@ -21,7 +21,7 @@ async function getDados(uri, parametros = {}) {
 
 
 async function PostDados(uri, parametros = {}) {
-  const requestURL = window.location.href + `${uri}`;
+  const requestURL = window.location.href + `/${uri}`;
   try {
     const response = await axios.post(requestURL, parametros, {
       headers: {

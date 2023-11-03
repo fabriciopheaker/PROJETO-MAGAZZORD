@@ -1,3 +1,30 @@
+
+#DESENVOLVIMENTO : DESAFIO TECNICO
+
+#DEV
+Fabricio Pheaker
+Email: fabricio.demolay1574@gmail.com
+
+acessar
+http://localhost
+
+#Observações
+Como não foi autorizado o uso de framework, foi criadO um miniframework baseado em MVC com sistemas de rotas,controller etc...
+
+Foi utilizado Patterns como Singleton para instanciar a conexão com o BD.
+Foi Utilizado Patterns Repository Para tirar a responsabilidade do model de execução das querys e o model focar nas regras de negocios.
+Como Objetivo era focar no backend o foco foi total em backend , utilizando o bootstrap 5 para fazer o front,
+Foi desenvolvido um metodo de criar um objeto javascript dinamicamente quando a view é instanciada, isso para evitar fazer a manipulação do dom via backend, então quando existia informações retornadas do banco de dados, o php instanciava um objeto js com o nome passado como parametro.
+O nome do objeto Js é passado pelo controlador para a ViewEngine.
+
+App/Core/ViewEngine - function render,
+
+OBS: Devido a Complexidade de algumas tarefas o projeto foi finalizado faltando pequenas melhorias e funcionalidades.
+Para fazer as buscar, basta clicar no button buscar, se o input estiver vazio será uma busca geral no BD, se tiver valor no input ele irá buscar os registros que contenham aquele valor. 
+
+
+
+
 #Composer Install
 
 caso a instalação do composer não tenha sido feita na hora de criar o container, basta executar o comando:
@@ -12,19 +39,21 @@ docker-compose exec app bash
 a2enmod rewrite
 service apache2 restart
 
-# INSTALAR AS DEPENDENCIAS
+# PARA CRIAR AS TABLES QUE ESTÃO MAPEADAS.
+cd docker
+docker-compose exec app bash
+vendor/bin/doctrine orm:schema-tool:create 
+
+# ATUALIZAR TABLE
+vendor/bin/doctrine orm:schema-tool:update --force
+
+
+# INSTALAR AS DEPENDENCIAS NPM
 npm install 
 
 
 
-# COMANDOS DOCTRINE 
 
-# CRIAR MODEL ENTITY
-vendor/bin/doctrine orm:generate-entities ./
-
-# CRIAR TABLES
-vendor/bin/doctrine orm:schema-tool:create 
-# ATUALIZAR TABLE
-vendor/bin/doctrine orm:schema-tool:update --force
+# OBS: NA PASTA DATABASE EXISTE 2 INSERT COM DADOS FAKE, BASTA COPIA E EXECUTAR NO SGBD.
 
 

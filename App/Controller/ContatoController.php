@@ -2,25 +2,39 @@
 
 namespace App\Controller;
 
-use App\Repository\PessoaRepository;
+use App\Repository\ContatoRepository;
 use App\Core\Response;
 use App\Core\Validator;
-use App\Core\ViewEngine;
 
-class PessoaController
+
+class ContatoController
 {
   private $repository;
 
   public function __construct()
   {
-    $this->repository = new PessoaRepository();
+    $this->repository = new ContatoRepository();
   }
-
 
   public function index()
   {
-    $dados = $this->repository->findAll();
+    $dados = $this->repository->index();
     $dados ? $resposta = Response::json($dados) : $resposta = Response::Error();
+    return $resposta;
+  }
+
+
+  public function findAll($json)
+  {
+    $result = Validator::Validator($json, ['ID']);
+
+    if ($result) {
+      $dados = $this->repository->findAll($json);
+      $dados ? $resposta = Response::json($dados) : $resposta = false;
+    } else {
+      $resposta = Response::Error();
+    }
+
     return $resposta;
   }
 
@@ -35,9 +49,8 @@ class PessoaController
 
   public function create($json)
   {
-    $result = Validator::Validator($json, ['NOME', 'CPF']);
+    $result = Validator::Validator($json, ['CONTATO', 'ID_PESSOA']);
     if ($result) {
-      $json->NOME =  strtoupper($json->NOME);
       $dados = $this->repository->create($json);
       $dados ? $resposta = Response::json($dados) : null;
     } else {
@@ -58,19 +71,10 @@ class PessoaController
     return $resposta;
   }
 
-  public function show($json)
-  {
-    $result = Validator::Validator($json, ['ID']);
-    if ($result) {
-      $dados = $this->repository->show($json);
-      return ViewEngine::render('PerfilView', 'perfil', json_encode($dados));
-    }
-  }
-
 
   public function update($json)
   {
-    $result = Validator::Validator($json, ['ID', 'NOME', 'CPF']);
+    $result = Validator::Validator($json, ['ID', 'CONTATO']);
     if ($result) {
       $dados = $this->repository->update($json);
       $dados ? $resposta = Response::json($dados) : null;

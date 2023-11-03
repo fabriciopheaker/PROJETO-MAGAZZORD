@@ -28,6 +28,14 @@ $(document).ready(function () {
   })
 
 
+  $('#buscarContato').click(() => {
+    $('#loaderContato').prop("hidden", false);
+    indexContatos()
+  })
+
+
+
+
 });
 
 async function indexPessoas() {
@@ -60,6 +68,7 @@ async function gravarPessoa() {
     setTimeout(function () {
       swal("Sucesso!", "Gravado com Sucesso!", "success");
     }, 1000);
+    $('#table').bootstrapTable('append', json_dados);
   }
   else {
     $('#cadastrar-modal').modal('hide');
@@ -80,24 +89,34 @@ function injetarDados(json) {
 
 }
 
+function injetarDadosContato(json) {
+  let Divtable = document.getElementById('DivtableContato');
+  Divtable.hidden = false;
+  $('#tableContato').bootstrapTable('removeAll');
+  $('#tableContato').bootstrapTable('load', json);
+
+}
+
+
+function TipoFormat(value, row, index) {
+  let badge = `<span class="badge rounded-pill text-bg-primary p-2">Email</span>`
+  if (value) {
+    badge = `<span class="badge rounded-pill text-bg-danger p-2">Telefone</span>`
+  }
+
+  return badge
+
+}
 
 
 function OperateFormat(value, row, index) {
   let butons = `
   <div class="d-flex justify-content-center"> 
 
-  <a href="pessoa/analisar/${row.ID}"   class="text-primary mx-1">
+  <a href="pessoa/${row.ID}"   class="text-primary mx-1">
   <i class="ri-user-search-line iconeOperat"></i> 
-</a>
-  <a href="javascript:void(0)" onclick='EditarPessoa(${JSON.stringify(row)})' class="text-info mx-1" >
-    <i class="uil-edit iconeOperat" ></i> 
-  </a>
-  <a href="javascript:void(0)" onclick='DeletarPessoa(${JSON.stringify(row)})'    class="text-danger mx-1">
-    <i class="uil-times-circle iconeOperat"></i> 
-  </a>
-  </div>`;
+</a>`;
   return butons;
-  onclick = 'verCurso(${JSON.stringify(element)})'
 }
 
 function EditarPessoa(json) {
@@ -113,6 +132,7 @@ async function GravarPessoaEditada(json_dados) {
   if (gravar.status = 200) {
     $('#cadastrar-modal').modal('hide');
     swal("Sucesso!", "Registro Atualizado com Sucesso!", "success");
+    $('#table').bootstrapTable('append', json_dados);
   } else {
     swal("Whoops!", "Aconteceu algum error!", "error");
   }
@@ -130,4 +150,13 @@ async function DeletarPessoa(json) {
     swal("Whoops!", "Aconteceu algum error!", "error");
   }
 
+}
+
+
+async function indexContatos() {
+  let json = await getDados('buscarcontatos');
+  if (json) {
+    $('#loaderContato').prop("hidden", true);
+    injetarDadosContato(json)
+  }
 }
